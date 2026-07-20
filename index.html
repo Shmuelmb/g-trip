@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>הטיול שלנו לטביליסי 🇬🇪</title>
+<style>
+  :root {
+    --bg: #0f1720;
+    --card: #1b2733;
+    --accent: #e8b84b;
+    --accent2: #4bb3e8;
+    --text: #f2f2f2;
+    --muted: #9aa7b0;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+    background: linear-gradient(180deg, #0f1720, #16202b 40%, #0f1720);
+    color: var(--text);
+    min-height: 100vh;
+  }
+  header {
+    text-align: center;
+    padding: 40px 20px 20px;
+  }
+  header h1 {
+    margin: 0;
+    font-size: 2rem;
+    color: var(--accent);
+  }
+  header p {
+    color: var(--muted);
+    margin-top: 8px;
+  }
+  nav {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 10px 16px 24px;
+  }
+  nav button {
+    background: var(--card);
+    color: var(--text);
+    border: 2px solid transparent;
+    border-radius: 999px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all .2s ease;
+  }
+  nav button:hover {
+    border-color: var(--accent2);
+  }
+  nav button.active {
+    background: var(--accent);
+    color: #1b2733;
+    font-weight: bold;
+  }
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 16px 60px;
+  }
+  .day {
+    display: none;
+    animation: fade .3s ease;
+  }
+  .day.active {
+    display: block;
+  }
+  @keyframes fade {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .card {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,.3);
+  }
+  .card h2 {
+    color: var(--accent2);
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .badge {
+    background: var(--accent);
+    color: #1b2733;
+    border-radius: 8px;
+    padding: 2px 10px;
+    font-size: .85rem;
+    font-weight: bold;
+  }
+  .cover {
+    width: 100%;
+    border-radius: 12px;
+    max-height: 260px;
+    object-fit: cover;
+    margin-bottom: 16px;
+  }
+  .map-wrap {
+    position: relative;
+    width: 100%;
+    padding-bottom: 65%;
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 16px 0;
+    border: 1px solid #2c3945;
+  }
+  .map-wrap iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  ul.plan {
+    line-height: 1.9;
+    padding-right: 20px;
+    margin: 0;
+  }
+  ul.plan li::marker {
+    color: var(--accent);
+  }
+  .tip {
+    background: rgba(75,179,232,.12);
+    border-right: 4px solid var(--accent2);
+    padding: 10px 14px;
+    border-radius: 8px;
+    margin-top: 14px;
+    color: var(--muted);
+    font-size: .95rem;
+  }
+  .tbd {
+    text-align: center;
+    color: var(--muted);
+    padding: 30px 10px;
+    border: 2px dashed #2c3945;
+    border-radius: 12px;
+  }
+  footer {
+    text-align: center;
+    color: var(--muted);
+    padding-bottom: 30px;
+    font-size: .85rem;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>הטיול שלנו לטביליסי 🇬🇪</h1>
+  <p>27–30 ביולי 2026</p>
+</header>
+
+<nav id="nav"></nav>
+
+<main id="main"></main>
+
+<footer>נסיעה טובה! ✈️</footer>
+
+<script>
+const days = [
+  {
+    id: 1,
+    title: "יום 1 — טביליסי",
+    badge: "27.7",
+    cover: "https://images.unsplash.com/photo-1590937680459-4f38d3968139?w=1200&q=80",
+    map: `<iframe src="https://www.google.com/maps/d/embed?mid=1uVA_1FQCR4vVb8a_Hw_FAcV7Cowf0Ps&ehbc=2E312F" loading="lazy"></iframe>`,
+    plan: [
+      "הגעה לטביליסי והתארגנות",
+      "סיור ברחבי העיר העתיקה לפי המפה המצורפת",
+      "כל הנקודות והמסלול המתוכננים מסומנים על המפה למטה"
+    ],
+    tip: "המפה היא מפת Google My Maps מותאמת אישית — אפשר ללחוץ על הסימונים לפרטים נוספים."
+  },
+  {
+    id: 2,
+    title: "יום 2 — הכביש הצבאי הגרוזיני",
+    badge: "28.7",
+    cover: "https://images.unsplash.com/photo-1600100397608-f00b7f8f9c53?w=1200&q=80",
+    map: `<iframe src="https://www.google.com/maps?q=Georgian+Military+Road,+Georgia&output=embed" loading="lazy"></iframe>`,
+    plan: [
+      "יציאה בבוקר לכיוון הכביש הצבאי הגרוזיני (Georgian Military Road)",
+      "עצירות לאורך הדרך בנופים ההרריים",
+      "מומלץ לבדוק מזג אוויר בהרים לפני היציאה"
+    ],
+    tip: "הכביש חוצה את הרי הקווקז ומוביל לכיוון גרגטי וקזבגי — כדאי לצאת מוקדם."
+  },
+  {
+    id: 3,
+    title: "יום 3 — גשר היהלום",
+    badge: "29.7",
+    cover: "https://images.unsplash.com/photo-1601987177651-8edfe6c20009?w=1200&q=80",
+    map: `<iframe src="https://www.google.com/maps?q=Diamond+Bridge+Georgia&output=embed" loading="lazy"></iframe>`,
+    plan: [
+      "נסיעה לגשר היהלום (Diamond Bridge)",
+      "זמן חופשי לצילומים ולסיור באזור",
+      "פרטים נוספים יעודכנו בהמשך"
+    ],
+    tip: "כדאי לוודא מראש את המיקום המדויק ושעות הגעה נוחות."
+  },
+  {
+    id: 4,
+    title: "יום 4 — עוד לא הוחלט",
+    badge: "30.7",
+    tbd: true
+  }
+];
+
+const nav = document.getElementById('nav');
+const main = document.getElementById('main');
+
+days.forEach((d, i) => {
+  const btn = document.createElement('button');
+  btn.textContent = `יום ${d.id}`;
+  btn.className = i === 0 ? 'active' : '';
+  btn.onclick = () => showDay(i);
+  nav.appendChild(btn);
+
+  const section = document.createElement('div');
+  section.className = 'day' + (i === 0 ? ' active' : '');
+  section.id = `day-${d.id}`;
+
+  let html = `<div class="card"><h2>${d.title} <span class="badge">${d.badge}</span></h2>`;
+  if (d.tbd) {
+    html += `<div class="tbd">🤔 עדיין לא סגור מה נעשה ביום הזה — נעדכן בקרוב!</div>`;
+  } else {
+    if (d.cover) html += `<img class="cover" src="${d.cover}" alt="${d.title}">`;
+    html += `<ul class="plan">${d.plan.map(p => `<li>${p}</li>`).join('')}</ul>`;
+    if (d.map) html += `<div class="map-wrap">${d.map}</div>`;
+    if (d.tip) html += `<div class="tip">💡 ${d.tip}</div>`;
+  }
+  html += `</div>`;
+  section.innerHTML = html;
+  main.appendChild(section);
+});
+
+function showDay(index) {
+  document.querySelectorAll('nav button').forEach((b, i) => b.classList.toggle('active', i === index));
+  document.querySelectorAll('.day').forEach((s, i) => s.classList.toggle('active', i === index));
+}
+</script>
+
+</body>
+</html>
