@@ -57,52 +57,61 @@
   nav {
     max-width: 900px;
     margin: 0 auto;
-    padding: 30px 16px 0;
+    padding: 34px 16px 0;
     border-bottom: 1px solid var(--line);
   }
   .cards-grid {
     display: flex;
-    gap: 6px;
+    gap: 4px;
     overflow-x: auto;
   }
   .step {
     flex: 1;
-    min-width: 92px;
+    min-width: 100px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 3px;
+    justify-content: flex-end;
+    gap: 4px;
     background: none;
     border: none;
-    border-bottom: 2px solid transparent;
-    padding: 8px 6px 14px;
+    border-bottom: 3px solid transparent;
+    padding: 10px 8px 16px;
+    min-height: 64px;
     cursor: pointer;
     font-family: inherit;
     color: var(--muted);
-    transition: color .2s ease, border-color .2s ease;
+    transition: color .2s ease, border-color .2s ease, background .2s ease;
+    border-radius: 8px 8px 0 0;
   }
   .step .icon {
     display: none;
   }
   .step .date {
     font-weight: 600;
-    font-size: .78rem;
-    letter-spacing: .3px;
+    font-size: .72rem;
+    letter-spacing: .8px;
+    text-transform: uppercase;
+    opacity: .8;
   }
   .step .label {
-    font-size: .92rem;
-    font-weight: 500;
+    font-size: 1rem;
+    font-weight: 600;
     text-align: center;
+    line-height: 1.25;
   }
   .step:hover {
     color: var(--ink);
+    background: rgba(122,35,49,.04);
   }
   .step.active {
     color: var(--wine);
     border-bottom-color: var(--wine);
+    background: rgba(122,35,49,.05);
   }
   .step.active .date {
     color: var(--terracotta);
+    opacity: 1;
   }
   main {
     max-width: 900px;
