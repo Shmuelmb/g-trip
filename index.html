@@ -68,16 +68,16 @@
   .step {
     flex: 1;
     min-width: 100px;
+    height: 84px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: center;
     gap: 4px;
     background: none;
     border: none;
     border-bottom: 3px solid transparent;
-    padding: 10px 8px 16px;
-    min-height: 64px;
+    padding: 10px 8px 13px;
     cursor: pointer;
     font-family: inherit;
     color: var(--muted);
@@ -95,10 +95,14 @@
     opacity: .8;
   }
   .step .label {
-    font-size: 1rem;
+    font-size: .92rem;
     font-weight: 600;
     text-align: center;
     line-height: 1.25;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
   }
   .step:hover {
     color: var(--ink);
@@ -245,7 +249,7 @@ const days = [
   {
     id: 2,
     title: "יום 2 — טביליסי",
-    label: "טביליסי",
+    label: "העיר העתיקה ושופינג  ",
     icon: "🏛️",
     badge: "27.7",
     cover: "images/day2-tbilisi.png",
@@ -260,7 +264,7 @@ const days = [
   {
     id: 3,
     title: "יום 3 — הכביש הצבאי הגרוזיני",
-    label: "כביש ב",
+    label:"הדרך הצבאית",
     icon: "🏔️",
     badge: "28.7",
     cover: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmECIp_qw3SG6F0a5AYCcWzyQIppd1HChOp1HvJHHRz-aejNLVoa-9l1sdODZ0w2o1iR4x4haXWGO4hJ1ldGOApygsz502sotRxoqDQEvIItYxjQurA1B26ygszYroR3iWK8Y27bOXFwiiY=w1200-h800-k-no",
