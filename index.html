@@ -55,32 +55,82 @@
     font-size: 1.05rem;
   }
   nav {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    flex-wrap: wrap;
-    padding: 22px 16px 28px;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 28px 24px 36px;
+    overflow-x: auto;
   }
-  nav button {
-    background: var(--paper);
-    color: var(--ink);
-    border: 2px solid var(--line);
-    border-radius: 999px;
-    padding: 10px 22px;
-    font-size: .95rem;
-    font-weight: 600;
+  .timeline {
+    display: flex;
+    align-items: flex-start;
+    min-width: 480px;
+  }
+  .step {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    background: none;
+    border: none;
+    padding: 0 4px;
     cursor: pointer;
+    font-family: inherit;
+    color: var(--muted);
+  }
+  .step .line {
+    position: absolute;
+    top: 11px;
+    right: 50%;
+    width: 100%;
+    height: 3px;
+    background: var(--line);
+    z-index: 0;
+  }
+  .step:first-child .line {
+    width: 50%;
+    right: 0;
+  }
+  .step.done .line,
+  .step.active .line {
+    background: linear-gradient(90deg, var(--gold), var(--terracotta));
+  }
+  .step .dot {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 3px solid var(--line);
+    z-index: 1;
     transition: all .2s ease;
   }
-  nav button:hover {
-    border-color: var(--terracotta-light);
-    color: var(--terracotta);
-  }
-  nav button.active {
+  .step.active .dot {
     background: linear-gradient(135deg, var(--terracotta), var(--wine));
-    border-color: transparent;
-    color: #fff;
-    box-shadow: 0 6px 16px rgba(122,35,49,.28);
+    border-color: var(--wine);
+    box-shadow: 0 0 0 5px rgba(122,35,49,.15);
+  }
+  .step.done .dot {
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+  .step .date {
+    margin-top: 10px;
+    font-weight: 700;
+    font-size: .85rem;
+    color: var(--ink);
+  }
+  .step .label {
+    font-size: .75rem;
+    margin-top: 2px;
+    text-align: center;
+    max-width: 90px;
+  }
+  .step.active .date,
+  .step.active .label {
+    color: var(--wine);
+  }
+  .step:hover .dot {
+    border-color: var(--terracotta-light);
   }
   main {
     max-width: 900px;
@@ -189,7 +239,7 @@
   <p>26–30 ביולי 2026</p>
 </header>
 
-<nav id="nav"></nav>
+<nav><div class="timeline" id="nav"></div></nav>
 
 <main id="main"></main>
 
@@ -200,6 +250,7 @@ const days = [
   {
     id: 1,
     title: "יום 1 — טיסה לטביליסי",
+    label: "טיסה",
     badge: "26.7",
     cover: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1200&q=80",
     plan: [
@@ -212,6 +263,7 @@ const days = [
   {
     id: 2,
     title: "יום 2 — טביליסי",
+    label: "טביליסי",
     badge: "27.7",
     cover: "https://images.unsplash.com/photo-1590937680459-4f38d3968139?w=1200&q=80",
     map: `<iframe src="https://www.google.com/maps/d/embed?mid=1uVA_1FQCR4vVb8a_Hw_FAcV7Cowf0Ps&ehbc=2E312F" loading="lazy"></iframe>`,
@@ -225,6 +277,7 @@ const days = [
   {
     id: 3,
     title: "יום 3 — הכביש הצבאי הגרוזיני",
+    label: "כביש צבאי",
     badge: "28.7",
     cover: "https://images.unsplash.com/photo-1600100397608-f00b7f8f9c53?w=1200&q=80",
     map: `<iframe src="https://www.google.com/maps?q=Georgian+Military+Road,+Georgia&output=embed" loading="lazy"></iframe>`,
@@ -238,6 +291,7 @@ const days = [
   {
     id: 4,
     title: "יום 4 — גשר היהלום",
+    label: "גשר היהלום",
     badge: "29.7",
     cover: "https://images.unsplash.com/photo-1601987177651-8edfe6c20009?w=1200&q=80",
     map: `<iframe src="https://www.google.com/maps?q=Diamond+Bridge+Georgia&output=embed" loading="lazy"></iframe>`,
@@ -251,6 +305,7 @@ const days = [
   {
     id: 5,
     title: "יום 5 — עוד לא הוחלט",
+    label: "עוד לא הוחלט",
     badge: "30.7",
     tbd: true
   }
@@ -260,11 +315,16 @@ const nav = document.getElementById('nav');
 const main = document.getElementById('main');
 
 days.forEach((d, i) => {
-  const btn = document.createElement('button');
-  btn.textContent = `יום ${d.id}`;
-  btn.className = i === 0 ? 'active' : '';
-  btn.onclick = () => showDay(i);
-  nav.appendChild(btn);
+  const step = document.createElement('button');
+  step.className = 'step' + (i === 0 ? ' active' : '');
+  step.onclick = () => showDay(i);
+  step.innerHTML = `
+    <span class="line"></span>
+    <span class="dot"></span>
+    <span class="date">${d.badge}</span>
+    <span class="label">${d.label}</span>
+  `;
+  nav.appendChild(step);
 
   const section = document.createElement('div');
   section.className = 'day' + (i === 0 ? ' active' : '');
@@ -285,7 +345,10 @@ days.forEach((d, i) => {
 });
 
 function showDay(index) {
-  document.querySelectorAll('nav button').forEach((b, i) => b.classList.toggle('active', i === index));
+  document.querySelectorAll('.step').forEach((b, i) => {
+    b.classList.toggle('active', i === index);
+    b.classList.toggle('done', i < index);
+  });
   document.querySelectorAll('.day').forEach((s, i) => s.classList.toggle('active', i === index));
 }
 </script>
