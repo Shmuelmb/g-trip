@@ -311,7 +311,7 @@ const main = document.getElementById('main');
 days.forEach((d, i) => {
   const step = document.createElement('button');
   step.className = 'step' + (i === 0 ? ' active' : '');
-  step.onclick = () => showDay(i);
+  step.onclick = () => showDay(i, true);
   step.innerHTML = `
     <span class="icon">${d.icon}</span>
     <span class="date">${d.badge}</span>
@@ -337,10 +337,22 @@ days.forEach((d, i) => {
   main.appendChild(section);
 });
 
-function showDay(index) {
+function showDay(index, updateHash) {
   document.querySelectorAll('.step').forEach((b, i) => b.classList.toggle('active', i === index));
   document.querySelectorAll('.day').forEach((s, i) => s.classList.toggle('active', i === index));
+  if (updateHash) {
+    history.pushState(null, '', `#day-${days[index].id}`);
+  }
 }
+
+function indexFromHash() {
+  const id = Number(location.hash.replace('#day-', ''));
+  const i = days.findIndex(d => d.id === id);
+  return i === -1 ? 0 : i;
+}
+
+showDay(indexFromHash(), false);
+window.addEventListener('popstate', () => showDay(indexFromHash(), false));
 </script>
 
 </body>
